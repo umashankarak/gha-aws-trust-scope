@@ -1,0 +1,176 @@
+{
+  "tf/s0_aud_only.tf": {
+    "rung": "S0",
+    "aud_constrained": true,
+    "sub_format": "none",
+    "note": "Audience and issuer checked, no sub condition. aud is the same constant for every GitHub user, so this admits every repository on GitHub."
+  },
+  "tf/s0_no_conditions.tf": {
+    "rung": "S0",
+    "aud_constrained": false,
+    "sub_format": "none",
+    "note": "Federated principal with no Condition block at all. Fully open; the degenerate case."
+  },
+  "tf/s0_owner_wildcard.tf": {
+    "rung": "S0",
+    "aud_constrained": true,
+    "sub_format": "none",
+    "note": "Wildcard in the OWNER position (repo:*) admits every org, not just every repo in one org. Must not be coded S1.",
+    "codebook_note": "DEFINITION FIXED 2026-09-28. Originally hand-coded sub_format=historical on the\nreasoning that the pattern lacks the @id markers of the immutable format. That is\nwrong: a pattern with no owner or repo segment carries no format evidence at all,\nand coding it \"historical\" would inflate the count of name-based subjects in the\nmigration analysis. sub_format is now defined as UNDETERMINABLE (none) whenever\neither segment is absent or wholly wildcarded.\n"
+  },
+  "tf/s1_org_wildcard.tf": {
+    "rung": "S1",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "The canonical repo:org/* case. Reads as \"our organization\", admits any repo in it, including repos not yet created."
+  },
+  "tf/s1_org_wildcard_trailing.tf": {
+    "rung": "S1",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "repo:org/*:* - same admitted population as s1, written differently. Tests normalization, not a distinct rung."
+  },
+  "tf/s2_repo_any_ref.tf": {
+    "rung": "S2",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "Repository pinned, ref unconstrained. Admits any branch or tag, so code that never passed review on the protected branch can assume the role."
+  },
+  "tf/s3_ref_pinned.tf": {
+    "rung": "S3",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "Repository and ref both pinned. The common \"correct\" example in tutorials."
+  },
+  "tf/s3_pull_request.tf": {
+    "rung": "S3",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "Pinned to the pull_request context. A specific context, not a wildcard - S3, despite looking risky."
+  },
+  "tf/s4_environment.tf": {
+    "rung": "S4",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "Environment-pinned, so GitHub-side approval gates are available."
+  },
+  "tf/s4_job_workflow_ref.tf": {
+    "rung": "S4",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "Constrained on job_workflow_ref rather than sub. Pins the reusable workflow identity."
+  },
+  "tf/s4_immutable.tf": {
+    "rung": "S4",
+    "aud_constrained": true,
+    "sub_format": "immutable",
+    "note": "Post-2026-07-15 immutable subject format using numeric owner and repo IDs. Not vulnerable to name recycling."
+  },
+  "tf/s2_multi_sub_loosest.tf": {
+    "rung": "S2",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "A list of sub values. Coded by the LOOSEST element, since admitted population is the union."
+  },
+  "tf/s1_foranyvalue.tf": {
+    "rung": "S1",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "ForAnyValue:StringLike operator. Operator prefix must not defeat detection."
+  },
+  "tf/u1_opaque_variable.tf": {
+    "rung": "U1",
+    "aud_constrained": true,
+    "sub_format": "none",
+    "note": "Entire sub value is one variable with no default and no tfvars. Rung turns on the unknown value, so unresolvable."
+  },
+  "tf/s3_shape_codeable.tf": {
+    "rung": "S3",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "Owner and repo are variables but the literal structure pins the ref. Shape determines the rung, so this is S3, not U1."
+  },
+  "tf/u3_eks_provider.tf": {
+    "rung": "U3",
+    "aud_constrained": false,
+    "sub_format": "none",
+    "note": "Matches on oidc-provider but the issuer is an EKS cluster, not GitHub Actions. Out of scope.",
+    "codebook_note": "DEFINITION FIXED 2026-09-28. Originally hand-coded aud_constrained=true because the\nfile does pin an aud claim -- but it pins the EKS issuer's aud, not GitHub's.\naud_constrained is now defined narrowly: the GitHub Actions audience claim is\npinned. For a non-GitHub federation the field is not applicable and is recorded\nfalse. Leaving it true would have let U3 rows pollute the aud cross-tab.\n"
+  },
+  "cfn/s1_org_wildcard.json": {
+    "rung": "S1",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "CloudFormation equivalent of the org-wildcard case. Tests the second parser path."
+  },
+  "cfn/s0_aud_only.json": {
+    "rung": "S0",
+    "aud_constrained": true,
+    "sub_format": "none",
+    "note": "CloudFormation with audience only."
+  },
+  "tf/native_s1_org_wildcard.tf": {
+    "rung": "S1",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "Native aws_iam_policy_document with repeated condition blocks; org wildcard sub. The dominant recoverable idiom (~21% of former U3)."
+  },
+  "tf/native_s3_ref_pinned.tf": {
+    "rung": "S3",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "Native data source, ref-pinned sub, identifiers via a resource reference (not a literal). Detected via the github claim keys, not the principal literal."
+  },
+  "tf/native_s0_aud_only.tf": {
+    "rung": "S0",
+    "aud_constrained": true,
+    "sub_format": "none",
+    "note": "Native data source with only an aud condition, no sub. S0."
+  },
+  "tf/salvage_for_loop.tf": {
+    "rung": "S1",
+    "aud_constrained": false,
+    "sub_format": "historical",
+    "note": "Real jsonencode_missed sample - for-loop over var.github_repos plus a ternary. Structural parse fails; text salvage reads both subs and codes by the loosest (org wildcard). No aud condition present."
+  },
+  "tf/native_reference_only.tf": {
+    "rung": "U3",
+    "aud_constrained": false,
+    "sub_format": "none",
+    "note": "Provider declaration plus a role that references a policy document defined in ANOTHER file. Nothing codeable here; correctly stays U3 (a collection-granularity limit, not a parser gap)."
+  },
+  "cfn/plan_json_s0.json": {
+    "rung": "S0",
+    "aud_constrained": true,
+    "sub_format": "none",
+    "note": "terraform plan JSON - assume_role_policy is an escaped-JSON string. Salvage reads the aud claim; no sub, so S0. (In a testdata/corpus path these are excluded upstream by FIXTURE_PATH.)"
+  },
+  "tf/native_interp_prefix_s2.tf": {
+    "rung": "S2",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "Real observeinc pattern - claim key is \"${local.oidc_claim_prefix}:sub\" (interpolated), sub repo:${org}/${repo}:* -> repo pinned, any ref. Was miscoded S0 before interpolated-prefix normalization."
+  },
+  "tf/native_interp_env_s4.tf": {
+    "rung": "S4",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "Real StreamForge pattern - interpolated prefix AND environment sub with NO literal slash (repo:${var.repo}:environment:${var.env}). Tail-first classifier reads S4; the old code misread the missing slash as S0."
+  },
+  "cdk/sst_config_s2.ts": {
+    "rung": "S2",
+    "aud_constrained": true,
+    "sub_format": "historical",
+    "note": "Real acme SST/Pulumi pattern in TypeScript - repo:${org}/${repo}:* via getPolicyDocumentOutput. Structural parsers do not read .ts; salvage detects it by the repo-prefix signature."
+  },
+  "cdk/pulumi_aud_only_s0.ts": {
+    "rung": "S0",
+    "aud_constrained": true,
+    "sub_format": "none",
+    "note": "Real public Pulumi pattern - JSON.stringify trust with only an aud condition, no sub. Genuine S0 via salvage."
+  },
+  ".github/workflows/deploy-aws-ecr.yml": {
+    "rung": "EXCLUDE",
+    "note": "A .github/workflows consumer file that quotes a sub in a COMMENT Must be excluded by path, never coded as a trust policy. Verified via the deployedness FIXTURE_PATH test, not the classifier."
+  }
+}

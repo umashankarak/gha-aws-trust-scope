@@ -1,0 +1,4 @@
+# SHA-256 of the original, unredacted evidence files (not published).
+39b02cfbcad857c6efcecba2fed28d1c3f511cc8a9c08397d394dc471b89761f  cloudtrail-all-demo-events.json
+0824b29f4cf66e300239f5ddaf4bb6ada8a2c3804392b1f7f6649e17d30c803f  cloudtrail-raw.json
+45ea411c88099ee7031c1f610f6f9d5af45b3326a1ef32525818b61bfe4da1ab  cloudtrail-summary.json

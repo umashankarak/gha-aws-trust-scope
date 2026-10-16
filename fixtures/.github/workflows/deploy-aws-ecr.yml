@@ -1,0 +1,12 @@
+name: Deploy AWS ECR
+# Trust policy on the IAM role must allow:
+#   sts:AssumeRoleWithWebIdentity for token.actions.githubusercontent.com
+#   with sub claim repo:acme/web:ref:refs/heads/main
+permissions:
+  id-token: write
+jobs:
+  push:
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}

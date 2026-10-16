@@ -1,0 +1,9 @@
+# never commit these
+data/blobs/
+*.tar.gz
+.release_salt
+token*
+*.pem
+.env
+__pycache__/
+.DS_Store

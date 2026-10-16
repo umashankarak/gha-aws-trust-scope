@@ -1,0 +1,60 @@
+name: oidc-demo
+
+# Runs on a push to ANY branch. Each job asks GitHub for an OIDC token and tries
+# to assume one test role. Nothing is deployed; the roles have no permissions.
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  id-token: write   # lets the job request a GitHub OIDC token
+  contents: read
+
+env:
+  AWS_REGION: us-east-1
+  AWS_DEFAULT_REGION: us-east-1
+
+jobs:
+  try-roles:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: "Role A: any branch (S2)"
+            role: "arn:aws:iam::ACCOUNT_ID:role/oidc-demo-any-branch"
+          - label: "Role B: main only (S3)"
+            role: "arn:aws:iam::ACCOUNT_ID:role/oidc-demo-main-only"
+    steps:
+      - name: Request a GitHub OIDC token and try to assume the role
+        env:
+          ROLE: ${{ matrix.role }}
+          LABEL: ${{ matrix.label }}
+        run: |
+          set -u
+          TOKEN=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" \
+            | python3 -c 'import json,sys; print(json.load(sys.stdin)["value"])')
+          # Print only the sub claim, never the token itself.
+          SUB=$(printf '%s' "$TOKEN" | python3 -c '
+          import base64, json, sys
+          p = sys.stdin.read().split(".")[1]
+          p += "=" * (-len(p) % 4)
+          print(json.loads(base64.urlsafe_b64decode(p))["sub"])')
+          if OUT=$(aws sts assume-role-with-web-identity --role-arn "$ROLE" \
+                --role-session-name "oidc-demo-${GITHUB_RUN_ID}" \
+                --web-identity-token "$TOKEN" --duration-seconds 900 \
+                --query 'AssumedRoleUser.Arn' --output text 2>&1); then
+            RESULT="ALLOWED"; DETAIL="$OUT"
+          else
+            RESULT="DENIED"; DETAIL=$(printf '%s' "$OUT" | grep -o 'AccessDenied[^)]*' | head -1)
+          fi
+          echo "branch : $GITHUB_REF_NAME"
+          echo "sub    : $SUB"
+          echo "role   : $LABEL"
+          echo "result : $RESULT  ($DETAIL)"
+          {
+            echo "| branch | token sub | role | result |"
+            echo "|---|---|---|---|"
+            echo "| \`$GITHUB_REF_NAME\` | \`$SUB\` | $LABEL | **$RESULT** |"
+          } >> "$GITHUB_STEP_SUMMARY"

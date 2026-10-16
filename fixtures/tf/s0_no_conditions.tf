@@ -1,0 +1,11 @@
+resource "aws_iam_role" "deploy" {
+  name = "gha-deploy-open"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Principal = { Federated = "arn:aws:iam::111122223333:oidc-provider/token.actions.githubusercontent.com" }
+      Action = "sts:AssumeRoleWithWebIdentity"
+    }]
+  })
+}

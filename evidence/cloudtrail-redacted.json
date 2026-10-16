@@ -1,0 +1,74 @@
+[
+  {
+    "eventTime": "2026-10-14T00:33:21Z",
+    "eventName": "AssumeRoleWithWebIdentity",
+    "result": "AccessDenied",
+    "subject": "repo:umakalaiah-netizen@319654339/oidc-branch-demo@1418161788:ref:refs/heads/main",
+    "roleArn": "",
+    "assumedRoleArn": "",
+    "eventID": "36612b68-dbaa-40cb-8707-1468a7d1a0fb"
+  },
+  {
+    "eventTime": "2026-10-14T00:33:21Z",
+    "eventName": "AssumeRoleWithWebIdentity",
+    "result": "AccessDenied",
+    "subject": "repo:umakalaiah-netizen@319654339/oidc-branch-demo@1418161788:ref:refs/heads/main",
+    "roleArn": "",
+    "assumedRoleArn": "",
+    "eventID": "5cb83125-3aab-4fb0-a2b7-19deb89889ff"
+  },
+  {
+    "eventTime": "2026-10-14T00:34:33Z",
+    "eventName": "AssumeRoleWithWebIdentity",
+    "result": "AccessDenied",
+    "subject": "repo:umakalaiah-netizen@319654339/oidc-branch-demo@1418161788:ref:refs/heads/main",
+    "roleArn": "",
+    "assumedRoleArn": "",
+    "eventID": "8190689d-b0cd-4f13-8586-129bfcdc585c"
+  },
+  {
+    "eventTime": "2026-10-14T00:34:34Z",
+    "eventName": "AssumeRoleWithWebIdentity",
+    "result": "AccessDenied",
+    "subject": "repo:umakalaiah-netizen@319654339/oidc-branch-demo@1418161788:ref:refs/heads/main",
+    "roleArn": "",
+    "assumedRoleArn": "",
+    "eventID": "f1114c21-a52b-4789-b873-65adbe0c18c2"
+  },
+  {
+    "eventTime": "2026-10-14T00:43:50Z",
+    "eventName": "AssumeRoleWithWebIdentity",
+    "result": "ALLOWED",
+    "subject": "repo:umakalaiah-netizen@319654339/oidc-branch-demo@1418161788:ref:refs/heads/main",
+    "roleArn": "arn:aws:iam::ACCOUNT_ID:role/oidc-demo-main-only",
+    "assumedRoleArn": "arn:aws:sts::ACCOUNT_ID:assumed-role/oidc-demo-main-only/oidc-demo-38491796357",
+    "eventID": "639c5377-1020-4852-956c-b5695723b316"
+  },
+  {
+    "eventTime": "2026-10-14T00:43:53Z",
+    "eventName": "AssumeRoleWithWebIdentity",
+    "result": "ALLOWED",
+    "subject": "repo:umakalaiah-netizen@319654339/oidc-branch-demo@1418161788:ref:refs/heads/main",
+    "roleArn": "arn:aws:iam::ACCOUNT_ID:role/oidc-demo-any-branch",
+    "assumedRoleArn": "arn:aws:sts::ACCOUNT_ID:assumed-role/oidc-demo-any-branch/oidc-demo-38491796357",
+    "eventID": "b8fb3209-c1a9-4db5-a8e4-7e1a9b58c922"
+  },
+  {
+    "eventTime": "2026-10-14T00:47:07Z",
+    "eventName": "AssumeRoleWithWebIdentity",
+    "result": "AccessDenied",
+    "subject": "repo:umakalaiah-netizen@319654339/oidc-branch-demo@1418161788:ref:refs/heads/feature/unreviewed-change",
+    "roleArn": "",
+    "assumedRoleArn": "",
+    "eventID": "14c41d98-72ad-4a1c-b3dc-72464e411529"
+  },
+  {
+    "eventTime": "2026-10-14T00:47:10Z",
+    "eventName": "AssumeRoleWithWebIdentity",
+    "result": "ALLOWED",
+    "subject": "repo:umakalaiah-netizen@319654339/oidc-branch-demo@1418161788:ref:refs/heads/feature/unreviewed-change",
+    "roleArn": "arn:aws:iam::ACCOUNT_ID:role/oidc-demo-any-branch",
+    "assumedRoleArn": "arn:aws:sts::ACCOUNT_ID:assumed-role/oidc-demo-any-branch/oidc-demo-38492098767",
+    "eventID": "daf994aa-d27d-48c0-821d-1c09cc9668e3"
+  }
+]
