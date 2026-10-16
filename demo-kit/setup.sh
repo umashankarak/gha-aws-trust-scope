@@ -37,11 +37,11 @@ EOF
 
 # Role A: the pattern the paper measures as S2 (repo pinned, any branch).
 aws iam create-role --role-name oidc-demo-any-branch --max-session-duration 3600 \
-  --description "Paper 10 demo: S2 trust, no permissions" \
+  --description "Trust-scope demo: S2 trust, no permissions" \
   --assume-role-policy-document "$(trust StringLike "repo:$OWNER/$REPO:*")" >/dev/null
 # Role B: S3 (repo and main branch pinned).
 aws iam create-role --role-name oidc-demo-main-only --max-session-duration 3600 \
-  --description "Paper 10 demo: S3 trust, no permissions" \
+  --description "Trust-scope demo: S3 trust, no permissions" \
   --assume-role-policy-document "$(trust StringEquals "repo:$OWNER/$REPO:ref:refs/heads/main")" >/dev/null
 # Neither role gets any permission policy: assuming it is the whole test.
 

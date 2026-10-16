@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Pre-test: checks your Mac is ready. Creates nothing, changes nothing.
+# Pre-test: checks that your machine is ready. Creates nothing, changes nothing.
 #   ./pretest.sh <github-owner> <repo-name>
 set -u
 OWNER="${1:-}"; REPO="${2:-}"
