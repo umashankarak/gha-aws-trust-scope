@@ -137,6 +137,20 @@ Optional: `pip install pyyaml` enables the CloudFormation YAML parser.
 repository, one trusting only `main`, and a workflow that tries both from `main` and from a new,
 unreviewed branch. Use it only with an AWS account and a GitHub repository that you own.
 
+## Re-running the collection: what to expect
+
+The numbers in the paper come from a snapshot taken on 28 and 29 September 2026. A new run of
+`collect.py` and `pipeline.py` will not return the same files: repositories are deleted, renamed
+or made private, files are edited, new repositories appear, and GitHub's code-search index
+changes. Expect different counts and similar proportions. The paper's estimates are checked
+against the frozen snapshot, which is what `data/coded_resolved.csv` contains, and every reported
+figure can be recomputed from it with `src/verify_numbers.py`.
+
+The original files and the unhashed repository list are not published, because doing so would
+identify roles that can be assumed from any branch or any repository. Editors and reviewers who
+need them to check individual classifications can request them from the author; they will be
+shared privately and not redistributed.
+
 ## Licenses
 
 Code: MIT (`LICENSE`). Data, evidence and codebook: CC BY 4.0 (`DATA_LICENSE.md`).
